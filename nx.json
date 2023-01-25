@@ -55,7 +55,9 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/.eslintrc.json"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": [
+      "{workspaceRoot}/babel.config.json"
+    ]
   },
   "workspaceLayout": {
     "appsDir": "packages",
@@ -74,6 +76,12 @@
       },
       "library": {
         "style": "none",
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "css",
         "linter": "eslint"
       }
     }

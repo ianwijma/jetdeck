@@ -1,67 +1,64 @@
 {
   "name": "frontend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/frontend/src",
+  "sourceRoot": "packages/frontend",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/vite:build",
+      "executor": "@nrwl/next:build",
       "outputs": [
         "{options.outputPath}"
       ],
       "defaultConfiguration": "production",
       "options": {
+        "root": "packages/frontend",
         "outputPath": "dist/packages/frontend"
       },
       "configurations": {
         "development": {
-          "mode": "development"
+          "outputPath": "packages/frontend"
         },
-        "production": {
-          "mode": "production"
-        }
+        "production": {}
       }
     },
     "serve": {
-      "executor": "@nrwl/vite:dev-server",
+      "executor": "@nrwl/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "frontend:build"
+        "buildTarget": "frontend:build",
+        "dev": true
       },
       "configurations": {
         "development": {
           "buildTarget": "frontend:build:development",
-          "hmr": true
+          "dev": true
         },
         "production": {
           "buildTarget": "frontend:build:production",
-          "hmr": false
+          "dev": false
         }
       }
     },
-    "preview": {
-      "executor": "@nrwl/vite:preview-server",
-      "defaultConfiguration": "development",
+    "export": {
+      "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "frontend:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "frontend:build:development"
-        },
-        "production": {
-          "buildTarget": "frontend:build:production"
-        }
+        "buildTarget": "frontend:build:production"
       }
     },
     "test": {
-      "executor": "@nrwl/vite:test",
+      "executor": "@nrwl/jest:jest",
       "outputs": [
-        "coverage/packages/frontend"
+        "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/packages/frontend"
+        "jestConfig": "packages/frontend/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     },
     "lint": {
